@@ -1,0 +1,142 @@
+<?php
+// $Id: tttp.module,v 1.9 2007/07/06 18:16:15 drewish Exp $
+
+
+/**
+ * @file
+ * This is an example outlining how a module can define blocks to be
+ * displayed on each page.
+ */
+
+
+function civiview_menu() {
+  $items = array();
+
+  $items['civiview/doc'] = array (
+    'title' => 'Word format',
+    'page callback' => 'civiview_doc',
+    'page arguments' => array(3),
+    'access callback' => 'civiview_access',
+    'access arguments' => array('view', 1),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['civiview/doc/%format'] = array (
+    'title' => 'Word format',
+    'page callback' => 'civiview_doc',
+    'page arguments' => array(3),
+    'access callback' => 'civiview_access',
+    'access arguments' => array('view', 1),
+    'type' => MENU_CALLBACK
+  );
+
+  $items['civiview/xls/%format'] = array ( 
+    'title' => "XLS format", 
+    'page callback' => 'civiview_xls', 
+    'page arguments' => array(3), 
+    'access callback' => 'civiview_access', 
+    'access arguments' => array('view', 2), 
+    'type' => MENU_CALLBACK 
+  );
+
+  $items['civiview/html'] = array ( 
+    'title' => "HTML format", 
+    'page callback' => 'civiview_html', 
+    'page arguments' => array(3), 
+    'access callback' => 'civiview_access', 
+    'access arguments' => array('view', 2), 
+    'type' => MENU_CALLBACK 
+  );
+
+  $items['civiview/html/%format'] = array ( 
+    'title' => "HTML format", 
+    'page callback' => 'civiview_html', 
+    'page arguments' => array(3), 
+    'access callback' => 'civiview_access', 
+    'access arguments' => array('view', 2), 
+    'type' => MENU_CALLBACK 
+  );
+
+  $items['civiview/xls'] = array ( 
+    'title' => "XLS format", 
+    'page callback' => 'civiview_xls', 
+    'page arguments' => array(3), 
+    'access callback' => 'civiview_access', 
+    'access arguments' => array('view', 1), 
+    'type' => MENU_CALLBACK 
+  );
+
+  $items['civiview'] = array (
+    'title' => 'CiviReport',
+    'page callback' => 'civiview',
+    'type' => MENU_CALLBACK
+  );
+ 
+  return $items;
+}
+
+function civiview ($data) {
+}
+
+
+function civicrm_init () {
+  civicrm_initialize(TRUE);
+  $smarty=new CRM_Core_Smarty();
+  $config =& CRM_Core_Config::singleton( );
+  $templateDir = dirname(__FILE__) ."/templates";
+
+  if ( isset( $config->customTemplateDir ) && $config->customTemplateDir ) {
+     $smarty->template_dir = array( $config->customTemplateDir, $templateDir );
+  } else {
+     $smarty->template_dir = $templateDir;
+  }
+  return $smarty;
+}
+
+
+function civiview_doc ($id,$format) {
+  drupal_set_header('Content-type: application/vnd.ms-word; charset=utf-8');
+  drupal_set_header("Content-Disposition: attachment; filename=" . $format . ".doc");
+  $smarty=civicrm_init();
+  $smarty->assign("id",$id);
+  $smarty->assign("format","doc");
+  echo $smarty->fetch ("common/$format.tpl");
+  exit;
+}
+
+function civiview_xls ($format,$id) {
+  drupal_set_header('Content-type: application/vnd.ms-excel; charset=utf-8');
+  drupal_set_header("Content-Disposition: attachment; filename=" . $format . ".xls");
+  $smarty=civicrm_init();
+//die ("$id,$format");
+  $smarty->assign("id",$id);
+  $smarty->assign("format","xls");
+  echo $smarty->fetch ("common/$format.tpl");
+  exit;
+}
+
+function civiview_html ($id,$format) {
+  $smarty=civicrm_init();
+//die ("$id,$format");
+  $smarty->assign("id",$id);
+  $smarty->assign("format","html");
+  return $smarty->fetch ("common/$format.tpl");
+}
+
+function civiview_access ($toto,$titi) {
+  return true;
+}
+
+function civiview_word ($format) {
+die ("toti");
+}
+
+
+function xsl_load ($format) {
+die ("bbb");
+}
+
+function word_load ($format) {
+die ("bbb");
+}
+

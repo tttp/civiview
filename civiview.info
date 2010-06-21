@@ -1,0 +1,5 @@
+name = CiviView
+description = Easy ways of creating a custom report
+dependencies[] = civicrm
+package = CiviCRM
+core = 6.x
