@@ -12,6 +12,24 @@ you have
 
 some examples of syntax.
 
+templates/common/staff.tpl
+
+{crmAPI entity="contact" action="Get" var="contacts" contact_sub_type="staff" return="gender,last_name,first_name"}
+<!--here comes the list -->
+<table border=1>
+{foreach from=$contacts item=contact}
+<tr>
+<td>
+{$contact.type}
+</td>
+<td>{$contact.gender}</td><td>{$contact.last_name} {$contact.first_name}</td><td>
+</tr>
+{/foreach}
+</table>
+{/if}
+</body>
+<html>
+
 X+
 
 .
