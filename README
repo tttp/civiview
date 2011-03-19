@@ -1,0 +1,17 @@
+This module offers a simple way to create reports by leveraging smarty and civicrm api {crmAPI}
+
+Usage:
+place a whatever.tpl into templates/common that contains template that generates an html array
+
+you have 
+/civiview/html/whatever that displays it
+/civiview/xls/whatever that generates an excel compatible one
+/civiview/doc/whatever that generates a word compatible one
+
+@TODOCUMENT
+
+some examples of syntax.
+
+X+
+
+.
